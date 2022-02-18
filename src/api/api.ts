@@ -18,15 +18,13 @@ import {
     ConvertBigIntObject
 } from '../bigIntConvert';
 import cors from 'cors';
-import { PrismaClient, Prisma, BorrowDetails, Library, Students } from '@prisma/client';
-import { ConvertBigIntObjects, ConvertBigIntObject } from '../bigIntConvert';
 //import { getBookInfo } from '../PrivateBookAPI/getBookInfo';
 import bCrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
-const nodePort = 2398;
+const nodePort = 3005;
 let bodyparsee = bodyParser.urlencoded({ extended: false});
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json())
@@ -248,7 +246,7 @@ app.get('/staff', async (req: Request, res: Response) => {
     .catch((e) => {
         res.status(500).send(e.message);
     });
-
+    });
 // app.get('/students', async (req, res) => {
 //     const members = await prisma.students.findMany()
 //     .then((members) => {
@@ -355,7 +353,7 @@ app.post('/updatePermissions', async (req: Request, res: Response) => {
     .catch(() => {
         res.status(500);
     });
-
+    });
 // app.post('/updateBook',(req, res) => {
 //     let ISBN = BigInt(parseInt((req.body.isbn).toString()));
 //     let ISBN2 = BigInt(parseInt((req.body.isbn2).toString()));
@@ -422,7 +420,7 @@ app.post('/updateBook', async (req: Request, res: Response) => {
     .catch(() => {
         res.redirect('/');
     });
-// });
+    });
 
 // app.post('/borrow',(req, res) => {
 //     let ntiId = req.body.ntiId;
@@ -553,4 +551,3 @@ app.post('/updateBook', async (req: Request, res: Response) => {
 
 //     res.redirect('/');
 // });
-
