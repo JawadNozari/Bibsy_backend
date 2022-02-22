@@ -1,9 +1,12 @@
 import { PrismaClient, Prisma, BorrowDetails, Library, Students } from '@prisma/client';
 
 type NumberLibrary = {
+    NTI_s_ID: Number;
     ISBN: Number;
-    BookName: String;
+    Publisher: string;
+    Title: String;
     Author: String;
+    Language: string;
 }
 
 export const ConvertBigIntObjects = (books:Library[]) => {
@@ -12,15 +15,21 @@ export const ConvertBigIntObjects = (books:Library[]) => {
 
     books.map((book) => {
         //Decunstruct and parse object
-        let ISBN = parseInt((books[0].ISBN).toString());
-        let BookName = books[0].ItemName;
-        let Author = books[0].Author;
+        let ISBN = parseInt((book.ISBN).toString());
+        let NTI_ID = book.NTI_s_ID;
+        let Title = book.Title;
+        let Author = book.Author;
+        let Publisher = book.Publisher;
+        let Language = book.Language;
 
         //Assembel object again
         let bookInfo = {
             ISBN: ISBN,
-            BookName: BookName,
+            NTI_s_ID: NTI_ID,
+            Title: Title,
             Author: Author,
+            Publisher: Publisher,
+            Language: Language,
         }
         //Push to array
         bookArray.push(bookInfo);
@@ -33,19 +42,19 @@ export const ConvertBigIntObject = (book:Library) => {
     let newBook: NumberLibrary;
     
         //Decunstruct and parse object
-        let ISBN = parseInt((book[0].ISBN).toString());
-        let BookName = book[0].BookName;
-        let Author = book[0].Author;
-        let IsAvailable = book[0].IsAvailable;
-        let Quantity = (book[0].Quantity);
+        let ISBN = parseInt((book.ISBN).toString());
+        let Title = book.Title;
+        let Author = book.Author;
+        let Publisher = book.Publisher
+        let Language = book.Language;
 
         //Assembel object again
         let bookInfo = {
             ISBN: ISBN,
-            BookName: BookName,
+            Title: Title,
             Author: Author,
-            IsAvailable: IsAvailable,
-            Quantity: Quantity
+            Publisher: Publisher,
+            Language: Language,
         }
         
         return bookInfo;
