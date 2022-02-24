@@ -17,7 +17,6 @@ model Permissions {
   AccessToResturant Boolean @default(false)
   AccessToUser      Boolean @default(false)
   AccessToServer    Boolean @default(false)
-
   //Relation points towards "Permissions" PID and takes the value of PID from the "Staff" model
   ID Staff @relation(fields: [PID], references: [PID])
 }
@@ -91,7 +90,6 @@ model BorrowDetails {
   Student_ID String
   Staff_ID   String
   Date       DateTime
-
   //Alows gathering data from already existing items from different tables.
   NTI_NTI_S      Library  @relation(fields: [NTI_ID], references: [NTI_s_ID])
   NTI_ID_Staff   Staff    @relation(fields: [Staff_ID], references: [PID])
@@ -106,8 +104,6 @@ model Restaurant {
   ID      Students @relation(fields: [PID], references: [ID])
   PID     Int      @unique
   staffID Int?
-
   isPersonal Staff? @relation(fields: [staffID], references: [ID])
-
   HaveEaten Boolean
 }
