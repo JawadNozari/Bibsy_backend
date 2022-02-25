@@ -44,15 +44,8 @@ app.use(cors({
     method:'POST, GET'
 }));
 
-// app.use('/login', (req, res) => {
-//     res.send({
-//       token: 'test123'
-//     });
-// });
 
 async function FetchPass(userName,ggpassword) {
-    console.log("Fetchpass2");
-    console.log(userName + ggpassword);
     
     const query = await prisma.login.findFirst({
         where:{
@@ -63,8 +56,7 @@ async function FetchPass(userName,ggpassword) {
         }
     })
     .then((response) => {
-        // console.log(response)
-        console.log("db yes");
+        console.log(response)
         const tester = String(response.PassWord);
         const incomingPassword = String(ggpassword);
         
@@ -74,7 +66,6 @@ async function FetchPass(userName,ggpassword) {
 
     }).catch(err => {
         console.error(err);
-        console.log("db no");
         return (`User '${userName}' doesn't Exist Check your spelling and try again`);
        
     })
@@ -147,15 +138,13 @@ app.listen(nodePort, () => {
 
 app.post('/login',bodyparsee, async (req: Request, res: Response) => {
     let username = req.body.id;
-    let unHash = req.body.pass
-    // let Hash = MD5(req.body.pass);
-    console.log("innan fetch");
+    let Hash = MD5(req.body.pass);
 
-        FetchPass(username, unHash)
+        FetchPass(username, Hash)
         .then((response) => {
             if(response == true){
                 console.log(response);
-                res.status(200).json({token: 'test123'}); 
+                res.status(200).json({token: MD5(String(Math.floor(Math.random() * 100)) + req.body.id + new Date()) }); 
             }
             else {
                 res.status(418);
